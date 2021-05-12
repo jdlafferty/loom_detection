@@ -210,7 +210,7 @@ When the number of units tiling visual space is increased, the solutions that re
 
 \section{Results}
 
-\subsection{A set of artificial visual stimuli}
+\subsection{A set of artificial visual stimuli is designed for training models}
 
 % 1. Describe the four types of stimuli
 
@@ -225,7 +225,7 @@ Our goal is to compare computational models trained to perform loom-detection wi
 
 % A good loom detector should respond strongly to hit signals and less strongly to other types of signals. We are interested in what types of computational structures can properly distinguish hit signals from the rest, and whether these structures resemble the biological ones discovered in LPLC2 neurons. If there are any differences, what are they?
 
-\subsection{An anatomically-constrained mathematical model for inferring loom}
+\subsection{An anatomically-constrained mathematical model detects loom}
 
 We designed and trained a simple, anatomically-constrained neural network (Fig. \ref{fig:model}) to infer whether or not a moving object will collide with the fly. The features of this network are designed to mirror anatomical features of the fly's LPLC2 neurons; see Fig~\ref{fig:anatomy}.
 
@@ -304,10 +304,10 @@ In Fig. \ref{fig:compare_multi}B, the inferred probabilities of hit for differen
 
 Since a larger number of LPLC2 units will cover an increasing spatial area of the visual field, the population of units can provide more information about the incoming signals. In general, the models perform better when the population of LPLC2 cells $M$ increases (Fig. \ref{fig:outward_prevail}A). In fact, when $M$ is above 32, both the ROC-AUC and PR-AUC scores are almost 1 (see Methods), which indicates that the model is very accurate on the binary classification task presented by the four types of synthetic data.
 
-While we have demonstrated that the counter-intuitive inward filters give reasonable solutions to the loom detection task, it is not clear why biological LPLC2 neurons have outward structures. To shed light on this question, we calculate the ratio of the number of outward filters to inward filters that arise out of 200 random initializations in a population size $M$. Interestingly, it shows an increasing proportion of solutions with outward filters as the number of LPLC2 units increases (Fig. \ref{fig:outward_prevail}B). For models with 256 LPLC2 cells, the chance that an outward filter appears as the output of the optimization is almost four times larger. Indeed, although both outward and inward models with large $M$ have similar ROC-AUC and PR-AUC scores,  the outward filters have lower cross entropy loss for large populations of LPLC2 units (Fig. \ref{fig:outward_prevail}C). These results suggest that the fly's visual 
+While we have demonstrated that the counter-intuitive inward filters give reasonable solutions to the loom detection task, it is not clear why biological LPLC2 neurons have outward structures. To shed light on this question, we calculate the ratio of the number of outward filters to inward filters that arise out of 200 random initializations in a population size $M$. Interestingly, it shows an increasing proportion of solutions with outward filters as the number of LPLC2 units increases (Fig. \ref{fig:outward_prevail}B). For models with 256 LPLC2 cells, the chance that an outward filter appears as the output of the optimization is almost four times larger. Indeed, although both outward and inward models with large $M$ have similar ROC-AUC and PR-AUC scores,  the outward filters have lower cross entropy loss for large populations of LPLC2 units (Fig. \ref{fig:outward_prevail}C). These results suggest that the fly's visual
 system may have been more likely to adopt the outward solution during the course of evolution.
 
-\subsection{Replications of biological data}
+\subsection{Activation patterns of computational solutions resemble biological responses}
 
 % 1. Models trained on binary tasks can reproduce biological data.
 
@@ -315,9 +315,11 @@ system may have been more likely to adopt the outward solution during the course
 
 % 3. The response patterns of our model to two-way expanding bars and edge inhibitions seem not consistent to the experiments, but models from different training procedures can do better.
 
-As has been discussed, the outward models have similar structures to biological LPLC2 neurons, and these structures are obtained from training to infer the probability of hit in a binary classification task. Thus, the responses of LPLC2 units are not directly constrained. It would be interesting to see whether the outward models can predict the actual activities of biological LPLC2 neurons, such as those that has been studied systematically by Klapoetke et al \cite{klapoetke2017ultra}.
+As discussed above, the outward models have structure that is similar to biological LPLC2 neurons, when trained to infer the probability of hit in a binary classification task. But the response patterns of LPLC2 units are not directly constrained. We presented specific artificial stimuli to the trained model, to investigate whether or not the models respond in a manner that resembles the actual activities of biological LPLC2 neurons, such as those that has been studied systematically by \cite{klapoetke2017ultra}.
 
-Here, we fed exactly the same set of stimuli used by them to one of the outward filters (256 units) obtained from training on the binary classification task (Fig. \ref{fig:replication}A). It can be seen that the model behaves similarly to LPLC2 neurons on many different types of stimuli. The model is selective to loom signals and does not have strong responses to non-looming ones (Fig. \ref{fig:replication}B). In addition, the model in Fig. \ref{fig:replication}A) can predict response patterns of the real LPLC2 neurons for expanding bars with different orientations (Fig. \ref{fig:replication}C, D). However, another outward solution from the same training procedure (Fig. \ref{figsupp:sf1_replication}D) predict the patterns in the wide expanding bars differently and out of phase from the biological data. This shows that even within the outward models, the structures of biological LPLC2 neurons are only part of the solutions of our model. In Fig. \ref{fig:replication}E, F), the model correctly predicts the responses of LPLC2 neurons to various bar expanding stimuli, especially the inhibitory effects of the inward motions. Moreover, in experiments, it has been found that motion signals that appear at the periphery of the receptive field will suppress the activities of the LPLC2 neurons (periphery inhibition) \citep{klapoetke2017ultra}, and this phenomenon is also successfully predicted by the model (Fig. \ref{fig:replication}G, H) due to the pixels at the top and bottom rows of the inhibitory filters in Fig. \ref{fig:replication}A).
+We presented several of the stimuli devised by \cite{klapoetke2017ultra} to one of the outward filters (256 units) obtained from training on the binary classification task (Fig. \ref{fig:replication}A). It is seen that the model behaves similarly to LPLC2 neurons on many different types of stimuli. In particular, the model is selective to loom signals and does not have strong responses to non-looming signals (Fig. \ref{fig:replication}B). In addition, the model in Fig. \ref{fig:replication}A can predict response patterns of the real LPLC2 neurons for expanding bars with different orientations (Fig. \ref{fig:replication}C, D). However, another outward solution from the same training procedure (Fig. \ref{figsupp:sf1_replication}D) predicts the patterns in the wide expanding bars differently and out of phase from the biological data. This shows that even within the family of learned outward models, the structures of biological LPLC2 neurons are only part of the solutions of our model.
+
+In Fig. \ref{fig:replication}E, F, the model closely follows the response of LPLC2 neurons to various expanding bar stimuli, especially the inhibitory effects of inward motion. Moreover, in experiments, it has been found that motion signals that appear at the periphery of the receptive field will suppress the activities of the LPLC2 neurons (periphery inhibition) \citep{klapoetke2017ultra}, and this phenomenon is also successfully predicted by the model (Fig. \ref{fig:replication}G, H) due to the pixels at the top and bottom rows of the inhibitory filters in Fig. \ref{fig:replication}A.
 
 
 \section{Discussion}
